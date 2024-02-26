@@ -1,8 +1,26 @@
 const express = require('express');
 const signUpValidation = require('../../helpers/signupValidation');
-const { createNewUser } = require('./controller');
+const loginValidation = require('../../helpers/loginValidation');
+const { createNewUser, userLogin} = require('./controller');
 const { validationResult } = require('express-validator');
 const router = express.Router();
+
+router.post('/login', loginValidation, async(req, res) => {
+    try {
+        let { email, password } = req.body;
+
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors : errors.array()});
+        }
+
+        const authenticatedUser = await userLogin({ email, password});
+        res.status(200).json(authenticatedUser);
+
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+});
 
 router.post('/signup', signUpValidation, async(req, res) => {
 
@@ -13,7 +31,7 @@ router.post('/signup', signUpValidation, async(req, res) => {
         email.trim();
         password.trim();
 
-        const errors = validationResult(firstName, lastName, email, password);
+        const errors = validationResult(req);
         if(!errors.isEmpty()){
             return res.status(400).json({errors : errors.array()});
         }

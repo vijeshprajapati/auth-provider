@@ -9,7 +9,7 @@ const app = express();
 
 app.use(bodyParser());
 app.use(cors());
-app.use('/user', routes);
+app.use('/api/user', routes);
 
 app.listen(PORT, () => {
     console.log(`Server running at : ${PORT}`);
