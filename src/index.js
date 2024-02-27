@@ -8,6 +8,8 @@ const otpRoutes = require('./domain/otp/routes');
 
 const app = express();
 
+app.set('view engine', 'ejs');
+
 app.use(bodyParser());
 app.use(cors());
 app.use('/api/user', userRoutes);
