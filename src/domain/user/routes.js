@@ -17,7 +17,7 @@ router.post('/login', loginValidation, async(req, res) => {
         const authenticatedUser = await userLogin({ email, password});
         // res.status(200).json(authenticatedUser);
 
-        res.render(__dirname + '\\login.ejs', {
+        res.render(__dirname + '/login.ejs', {
             user : authenticatedUser
         });
 
