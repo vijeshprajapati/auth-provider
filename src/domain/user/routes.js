@@ -17,12 +17,14 @@ router.post('/login', loginValidation, async(req, res) => {
         const authenticatedUser = await userLogin({ email, password});
 
 
-        res.setHeader('Content-Type', 'text/html');
-        res.status(201).render(__dirname + '/login.ejs', {
-            user : authenticatedUser
-        }, (err, html) => {
-            res.send(html);
-        });
+        // res.setHeader('Content-Type', 'text/html');
+        // res.status(201).render(__dirname + '/login.ejs', {
+        //     user : authenticatedUser
+        // }, (err, html) => {
+        //     res.send(html);
+        // });
+
+        res.status(200).json(authenticatedUser);
 
     } catch (error) {
         res.status(400).send(error.message).json();
